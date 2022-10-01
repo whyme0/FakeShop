@@ -1,16 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FakeShop.Models;
+using FakeShop.Repositories;
 
 namespace FakeShop.Controllers.CMS
 {
-    [Route("[controller]/products/")]
-    public partial class CmsController : Controller
+    [Route("cms/products/")]
+    public partial class ProductController : Controller
     {
+        private readonly ILogger _logger;
+        private readonly ProductRepository _productRepository;
+
+        public ProductController(ILogger logger, ProductRepository productRepository)
+        {
+            _logger = logger;
+            _productRepository = productRepository;
+        }
 
         [Route("")]
         public IActionResult List()
         {
-            throw new NotImplementedException();
+            return Content("Hello");
         }
 
         [Route("create")]
