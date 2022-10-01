@@ -10,16 +10,16 @@ namespace FakeShop.Controllers.CMS
         private readonly ILogger _logger;
         private readonly ProductRepository _productRepository;
 
-        public ProductController(ILogger logger, ProductRepository productRepository)
+        public ProductController(ILogger<ProductController> logger, ProductRepository productRepository)
         {
             _logger = logger;
             _productRepository = productRepository;
         }
 
         [Route("")]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            return Content("Hello");
+            return View("../Cms/ProductsList", await _productRepository.GetAll());
         }
 
         [Route("create")]
