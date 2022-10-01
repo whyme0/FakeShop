@@ -4,6 +4,7 @@ using FakeShop.Data;
 using FakeShop.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using FakeShop.Repositories;
 
 string rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,9 @@ Log.Logger = new LoggerConfiguration()
         restrictedToMinimumLevel: LogEventLevel.Information)
     .CreateLogger();
 builder.Host.UseSerilog();
+
+// DI
+builder.Services.AddScoped<ProductRepository>();
 
 builder.Services.AddDbContextPool<ShopDbContext>(b =>
     b.UseMySql(connString, ServerVersion.AutoDetect(connString)));
