@@ -13,6 +13,9 @@ namespace FakeShop.Controllers
             _logger = logger;
         }
 
+        [Route("/")]
+        public IActionResult Home() => View();
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
