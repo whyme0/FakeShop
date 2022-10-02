@@ -6,6 +6,9 @@
 # Logging stuff
 FakeShop/Logging/
 
+# DB Migrations
+FakeShop/Migrations/
+
 # User-specific files
 *.rsuser
 *.suo
