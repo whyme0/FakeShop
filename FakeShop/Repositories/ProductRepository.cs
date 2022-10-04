@@ -10,6 +10,8 @@ namespace FakeShop.Repositories
         private readonly ShopDbContext _dbContext;
         private readonly DbSet<Product> _dbSet;
 
+        public ShopDbContext DbContext { get => _dbContext; }
+
         public ProductRepository(ShopDbContext dbContext)
         {
             _dbContext = dbContext;
