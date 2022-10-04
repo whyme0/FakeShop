@@ -26,14 +26,21 @@ namespace FakeShop.Controllers.CMS
         [HttpGet]
         public IActionResult Create()
         {
-            throw new NotImplementedException();
+            return View("../Cms/ProductCreate");
         }
 
         [Route("create")]
         [HttpPost]
-        public IActionResult Create(Product p)
+        public async Task<IActionResult> Create(Product p)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return View("../Cms/ProductCreate", p);
+            }
+
+            await _productRepository.Insert(p);
+            await _productRepository.DbContext.SaveChangesAsync();
+            return Content($"Product \"{p.Name}\" created");
         }
 
         [Route("edit")]
