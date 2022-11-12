@@ -45,8 +45,8 @@ namespace FakeShop.Tests.TestRepositories
         [Fact]
         public async void TestGetAndGetAll_NoData()
         {
-            var productsBeforeDeleteOperation = await ProductRepository.GetAll();
-            ProductRepository.Delete(productsBeforeDeleteOperation);
+            IList<Product> productsBeforeDeleteMethod = await ProductRepository.GetAll();
+            await ProductRepository.Delete(productsBeforeDeleteMethod);
 
             // Get
             Product? product1 = await ProductRepository.Get(p => p.VendorCode == 312985);
