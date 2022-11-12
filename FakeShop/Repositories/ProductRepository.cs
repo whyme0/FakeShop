@@ -27,9 +27,10 @@ namespace FakeShop.Repositories
             }
         }
 
-        public Task Delete(IEnumerable<int> ids)
+        public async Task Delete(IList<Product> products)
         {
-            throw new NotImplementedException();
+            _dbSet.RemoveRange(products);
+            await DbContext.SaveChangesAsync();
         }
 
         public async Task<Product?> Get(Expression<Func<Product, bool>> expression, List<string>? includes = null)
