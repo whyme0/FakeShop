@@ -19,7 +19,7 @@ namespace FakeShop.Repositories
 
         Task Delete(int id);
 
-        Task Delete(IEnumerable<int> ids);
+        Task Delete(IList<T> entities);
 
         void Update(T entity);
     }
