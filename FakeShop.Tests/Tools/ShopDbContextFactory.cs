@@ -54,6 +54,17 @@ namespace FakeShop.Tests.Tools
             var context = new ShopDbContext(options);
 
             context.Database.EnsureCreated();
+            
+            var productWithRelations = new Product()
+            {
+                VendorCode = 100000,
+                Name = "Name",
+                Description = "Description",
+                IsSelling = false,
+                IsHidden = false,
+                CurrentPrice = 1,
+                Quantity = 1
+            };
 
             context.AddRange(
                 new Product() // for delete
@@ -76,19 +87,8 @@ namespace FakeShop.Tests.Tools
                     CurrentPrice = 1,
                     Quantity = 1
                 },
-                new Product() // for create & edit
-                {
-                    VendorCode = 100000,
-                    Name = "Name",
-                    Description = "Description",
-                    IsSelling = false,
-                    IsHidden = false,
-                    CurrentPrice = 1,
-                    Quantity = 1
-                }
+                productWithRelations // for create & edit
             );
-
-            var productWithRelations = context.Products.First(p => p.VendorCode == 312986);
 
             context.AddRange(
                 new ProductImage() { ImagePath = "/path/img1.png", ProductId = productWithRelations.Id, Product = productWithRelations },
