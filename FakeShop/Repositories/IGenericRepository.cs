@@ -15,12 +15,12 @@ namespace FakeShop.Repositories
             List<string>? includes = null
             );
 
-        Task Insert(T entity);
+        Task<bool> Create(T entity);
 
-        Task Delete(int id);
+        Task<bool> Delete(int id);
 
-        Task Delete(IList<T> entities);
+        Task<bool> Delete(IList<T> entities);
 
-        void Update(T entity);
+        Task<bool> Update(T entity);
     }
 }
