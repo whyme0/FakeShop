@@ -66,7 +66,7 @@ namespace FakeShop.Repositories
                 query = orderBy(query);
             }
 
-            return await query.AsNoTracking().ToListAsync();
+            return await query.ToListAsync();
         }
 
         public async Task Insert(Product entity)
