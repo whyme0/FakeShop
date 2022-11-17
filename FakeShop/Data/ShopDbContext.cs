@@ -25,6 +25,10 @@ namespace FakeShop.Data
             builder.Entity<User>()
                 .Property(u => u.Sex).HasConversion<int>();
 
+            builder.Entity<Product>()
+                .HasIndex(p => p.VendorCode)
+                .IsUnique();
+
             builder.Entity<User>(b => b.ToTable("Users"));
             builder.Entity<IdentityRole>(b => b.ToTable("Roles"));
             builder.Entity<IdentityRoleClaim<string>>(b => b.ToTable("RoleClaims"));
