@@ -122,19 +122,5 @@ namespace FakeShop.Tests.TestRepositories
             p = await ProductRepository.Get(p => p.VendorCode == 100000);
             Assert.NotEqual(p.Name, previousName);
         }
-
-        [Fact]
-        public async Task TestEdit_TryEditUnchangableField_ReturnsFalse()
-        {
-            Product? p = await ProductRepository.Get(p => p.VendorCode == 100000);
-            p.VendorCode = 100001;
-
-            bool result = await ProductRepository.Update(p);
-
-            Assert.False(result);
-
-            p = await ProductRepository.Get(p => p.VendorCode == 100000);
-            Assert.Equal(100000, p.VendorCode);
-        }
     }
 }
