@@ -38,8 +38,7 @@ namespace FakeShop.Controllers.CMS
                 return View("../Cms/ProductCreate", p);
             }
 
-            await _productRepository.Insert(p);
-            await _productRepository.DbContext.SaveChangesAsync();
+            await _productRepository.Create(p);
             return Content($"Product \"{p.Name}\" created");
         }
 

@@ -45,49 +45,49 @@ namespace FakeShop.Tests.TestRepositories
             Assert.False(result);
         }
 
-        [Fact]
-        public async Task TestDelete_AlsoDeletesChildrenRelations()
-        {
-            Product product = await ProductRepository.Get(p => p.VendorCode == 312986);
-            var productImages = await ProductImagesRepository.Get(p => p.ProductId == product.Id);
+        //[Fact]
+        //public async Task TestDelete_AlsoDeletesChildrenRelations()
+        //{
+        //    Product? product = await ProductRepository.Get(p => p.VendorCode == 312986);
+        //    var productImages = await ProductImagesRepository.Get(p => p.ProductId == product!.Id);
 
-            Assert.Equal(productImages.Count, 2);
+        //    Assert.Equal(productImages.Count, 2);
 
-            bool result = await ProductRepository.Delete(product.Id);
+        //    bool result = await ProductRepository.Delete(product.Id);
 
-            Assert.True(result);
+        //    Assert.True(result);
 
-            productImages = await ProductImagesRepository.Get(p => p.ProductId == product.Id);
+        //    productImages = await ProductImagesRepository.Get(p => p.ProductId == product.Id);
 
-            Assert.Empty(productImages);
-        }
+        //    Assert.Empty(productImages);
+        //}
 
-        [Fact]
-        public async Task TestCreate_DefaultBehavior_ReturnsTrue()
-        {
-            Product p = new Product()
-            {
-                VendorCode = 100001,
-                Name = "Name",
-                Description = "Description",
-                IsSelling = false,
-                IsHidden = false,
-                CurrentPrice = 1,
-                Quantity = 1
-            };
+        //[Fact]
+        //public async Task TestCreate_DefaultBehavior_ReturnsTrue()
+        //{
+        //    Product p = new Product()
+        //    {
+        //        VendorCode = 100001,
+        //        Name = "Name",
+        //        Description = "Description",
+        //        IsSelling = false,
+        //        IsHidden = false,
+        //        CurrentPrice = 1,
+        //        Quantity = 1
+        //    };
             
-            var productImages = new List<ProductImage>
-            {
-                new ProductImage() { ImagePath = "/path/imgx.png", ProductId = p.Id, Product = p },
-                new ProductImage() { ImagePath = "/path/imgy.png", ProductId = p.Id, Product = p }
-            };
+        //    var productImages = new List<ProductImage>
+        //    {
+        //        new ProductImage() { ImagePath = "/path/imgx.png", ProductId = p.Id, Product = p },
+        //        new ProductImage() { ImagePath = "/path/imgy.png", ProductId = p.Id, Product = p }
+        //    };
 
-            bool result = await ProductRepository.Create(p, productImages);
+        //    bool result = await ProductRepository.Create(p, productImages);
 
-            Assert.True(result);
+        //    Assert.True(result);
 
-            Assert.Contains(productImages, ProductImagesRepository.Get(p => p.ProductId == product.Id));
-        }
+        //    Assert.Contains(productImages, ProductImagesRepository.Get(p => p.ProductId == product.Id));
+        //}
 
         [Fact]
         public async Task TestCreate_AttemptToCreateDuplicateModel_ReturnsFalse()
@@ -121,20 +121,6 @@ namespace FakeShop.Tests.TestRepositories
 
             p = await ProductRepository.Get(p => p.VendorCode == 100000);
             Assert.NotEqual(p.Name, previousName);
-        }
-
-        [Fact]
-        public async Task TestEdit_TryEditUnchangableField_ReturnsFalse()
-        {
-            Product? p = await ProductRepository.Get(p => p.VendorCode == 100000);
-            p.VendorCode = 100001;
-
-            bool result = await ProductRepository.Update(p);
-
-            Assert.False(result);
-
-            p = await ProductRepository.Get(p => p.VendorCode == 100000);
-            Assert.Equal(100000, p.VendorCode);
         }
     }
 }

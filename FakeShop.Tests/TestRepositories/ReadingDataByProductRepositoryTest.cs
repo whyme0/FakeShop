@@ -30,7 +30,7 @@ namespace FakeShop.Tests.TestRepositories
             Assert.NotNull(product1);
             Assert.NotNull(product2);
 
-            Assert.NotEqual(product1, product1);
+            Assert.NotEqual(product1, product2);
         }
 
         [Fact]

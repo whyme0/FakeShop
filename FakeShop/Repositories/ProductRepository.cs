@@ -18,19 +18,23 @@ namespace FakeShop.Repositories
             _dbSet = _dbContext.Set<Product>();
         }
 
-        public async Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             var entity = await _dbSet.FindAsync(id);
             if (entity != null)
             {
                 _dbSet.Remove(entity);
+                await _dbContext.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
 
-        public async Task Delete(IList<Product> products)
+        public async Task<bool> Delete(IList<Product> products)
         {
             _dbSet.RemoveRange(products);
             await DbContext.SaveChangesAsync();
+            return true;
         }
 
         public async Task<Product?> Get(Expression<Func<Product, bool>> expression, List<string>? includes = null)
@@ -44,7 +48,7 @@ namespace FakeShop.Repositories
                 }
             }
 
-            return await query.AsNoTracking().FirstOrDefaultAsync(expression);
+            return await query.FirstOrDefaultAsync(expression);
         }
 
         public async Task<IList<Product>> GetAll(Expression<Func<Product, bool>>? expression = null, Func<IQueryable<Product>, IOrderedQueryable<Product>>? orderBy = null, List<string>? includes = null)
@@ -66,18 +70,26 @@ namespace FakeShop.Repositories
                 query = orderBy(query);
             }
 
-            return await query.AsNoTracking().ToListAsync();
+            return await query.ToListAsync();
         }
 
-        public async Task Insert(Product entity)
+        public async Task<bool> Create(Product entity)
         {
+            if (Get(p => p.VendorCode == entity.VendorCode).Result != null)
+            {
+                return false;
+            }
             await _dbSet.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
 
-        public void Update(Product entity)
+        public async Task<bool> Update(Product entity)
         {
             _dbSet.Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
     }
 }
