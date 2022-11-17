@@ -75,6 +75,10 @@ namespace FakeShop.Repositories
 
         public async Task<bool> Create(Product entity)
         {
+            if (Get(p => p.VendorCode == entity.VendorCode).Result != null)
+            {
+                return false;
+            }
             await _dbSet.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
             return true;
